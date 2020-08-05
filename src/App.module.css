@@ -4,8 +4,8 @@ body{
     margin: 0;
 }
 .container{
-    margin-left: 10.5em;
-    margin-right: 10.5em;
+    margin-left: 5em;
+    margin-right: 5em;
     align-items:center;
     
     
@@ -14,6 +14,7 @@ body{
 @media(max-width: 770px)
 {
     .container{
-        margin:0 10%;
+        margin-left:7%;
+        margin-right: 7%;
     }
 }

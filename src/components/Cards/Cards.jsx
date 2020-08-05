@@ -15,7 +15,7 @@ const Cards = ({ cases }) => {
             <div>
                 <Typography className={styles.text} variant='h4'>Total Cases In India</Typography>
             </div>
-            <Grid container spacing={3} justify="center">
+            <Grid container spacing={3} justify="center"object-fit='true' >
 
                 <Grid item component={Card} xs={12} md={3} className={cx(styles.card, styles.infected)}>
 
