@@ -1,64 +1,50 @@
-import React, { useState, useEffect } from 'react'
-import { fetchDailyData } from '../../api';
-import { Line, Bar } from 'react-chartjs-2';
+import React from 'react'
+
+import { Line } from 'react-chartjs-2';
 import styles from './Chart.module.css';
 
 
-const Chart = ({data:{confirmed,recovered,deaths},country}) => {
-    const [dailyData, setDailyData] = useState({});
 
-    useEffect(() => {
-        const fetchAPI = async () => {
-            setDailyData(await fetchDailyData());
-        }
-        
-        fetchAPI();
-    },[]);
+const Chart = ({ stateTime }) => {
+    if (!stateTime[0]) {
+        return "";
+    }
     const lineChart = (
-        dailyData.length ? (
+        stateTime[0] ? (
             <Line
                 data={{
-                    labels: dailyData.map(({date}) => date),
+                    labels: stateTime.map((row) => row.date),
                     datasets: [{
-                        data: dailyData.map(({confirmed})=> confirmed),
-                        label: "Infected",
-                        borderColor: '#3333ff',
-                        fill:true,
+                        data: stateTime.map((row) => row.totalconfirmed),
+                        label: "Confirmed",
+                        borderColor: '#39a0ca',
+                        fill: true,
+                        lineTension: 0,
                     }, {
-                    data: dailyData.map(({deaths})=> deaths),
-                    label: "Deaths",
-                    borderColor: 'rgba(255,0,0,0,0.5)',
-                    backgroundColor: 'rgb(255,0,0,0.5)',
-                    fill:true,}],
-                }}
-            />) : null
-    );
-    const barChart = (
-        confirmed ? (
-            <Bar
-            data={{
-                labels:['Infected','Recovered','Deaths'],
-                datasets:[
-                    {
-                    label:'People',
-                    backgroundColor:['rgba(0,0,255,0.5)','rgba(255,0,0,0.5)','rgba(255,0,0,0.5)'],
-                    data:[confirmed.value,recovered.value,deaths.value],
-                }
-                ]
+                        data: stateTime.map((row) => row.totalrecovered),
+                        label: "Recovered",
+                        borderColor: '#359951',
 
-            }}
-            options={{
-                legend:{display:false},
-                title: {display:true,text:`Current state in ${country}`},
-            }}
-            />
-        ) : null
-    );
+                        fill: true,
+                    }, {
+                        data: stateTime.map((row) => row.totaldeceased),
+                        label: "Deaths",
+                        borderColor: '#e62739',
+                        fill: true,
+                    }],
+                }}
+            />) : null);
+
+
     return (
-        <div className={styles.container}>
-            {country ? barChart : lineChart}
+        <div className={styles.container}  >
+            {lineChart}
         </div>
     )
 }
 
 export default Chart;
+
+
+
+

@@ -1,48 +1,49 @@
 import React, { Component } from 'react'
-import {Cards,CardsIndia,Tables,AppBar} from './components';
+import { Cards, CardsIndia, Tables, AppBar, Chart,Footer } from './components';
 import styles from './App.module.css';
-import { fetchData,indiaData, tableCase} from "./api";
-
+import { indiaData, tableCase, timeSeries } from "./api";
 
 export default class App extends Component {
   state = {
-    data:{},
-    country:'',
-    cases:{},
-    stateCase:{},
+
+    cases: {},
+    stateCase: {},
+    stateTime: {},
   }
-  async componentDidMount()
-  {
-    const fetchedData = await fetchData();
-    this.setState({data:fetchedData});
+  async componentDidMount() {
+
 
     const axiosData = await indiaData();
-    this.setState({cases:axiosData});
+    this.setState({ cases: axiosData });
 
     const stateData = await tableCase();
-    this.setState({stateCase:stateData});
+    this.setState({ stateCase: stateData });
+
+    const stateTime = await timeSeries();
+    this.setState({ stateTime: stateTime });
   }
 
 
-  handleCountryChange = async(country) => {
-    const fetchedData = await fetchData(country);
-    this.setState({data:fetchedData,country:country});
-  }
-  
   render() {
-    const {data,country,cases,stateCase}=this.state;
+    const { cases, stateCase, stateTime } = this.state;
+    if(stateTime.length<1){
+    return "";
+    }
     return (
-      <div >
-         <AppBar style={{ margin: 0 }} />
-      <div className={styles.container}>
-       
-        <CardsIndia cases={cases}/>
-        
-        <Cards cases={cases}/>
 
-        <Tables stateCase={stateCase}/>
-        
-      </div>
+      <div >
+        <AppBar />
+        <div className={styles.container}>
+
+          <CardsIndia cases={cases} />
+
+          <Cards cases={cases} />
+
+          <Tables stateCase={stateCase} />
+          <Chart stateTime={stateTime} />
+          
+        </div>
+        <Footer cases={cases}/>
       </div>
     )
   }

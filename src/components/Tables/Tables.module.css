@@ -1,12 +1,15 @@
 .container{
     margin-top: 1em;
     margin-bottom: 2em;
-    border-bottom: 12px solid #39a0ca;
-
+    border: 10px solid white;
+    
 }
+
 
 
 .tableheader{
     background: #2E3B55 !important;
     color: #f4f4f4 !important;
+    
  }
+ tr:nth-child(even) {background: rgb(246, 246, 246)}
