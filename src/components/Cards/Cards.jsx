@@ -21,7 +21,7 @@ const Cards = ({ cases }) => {
 
                     <CardContent align='center'>
                         <Typography color="textSecondary" gutterBottom>
-                            Active
+                            Confirmed
                        </Typography>
                         <Typography variant='h4'>
 
@@ -37,7 +37,7 @@ const Cards = ({ cases }) => {
                             {cases.date}
                         </Typography>
                         <Typography variant="body2">
-                            Number of active cases
+                            Number of confirmed cases
                        </Typography>
                     </CardContent>
                 </Grid>
